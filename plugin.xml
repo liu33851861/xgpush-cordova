@@ -19,12 +19,21 @@
   <preference name="ACCESS_ID" />
   <preference name="ACCESS_KEY" />
 
-  <js-module name="XGPush" src="www/xgpush.js">
-    <clobbers target="XGPush" />
+  <js-module src="www/xgpush.js" name="xgpush">
+    <clobbers target="xgpush" />
   </js-module>
 
   <!-- android -->
   <platform name="android" >
+
+    <config-file target="res/xml/config.xml" parent="/*">
+
+      <feature name="XgPush">
+        <param name="android-package" value="com.eteng.push.xgpush2.XgPushPlugin" />
+        <param name="onload" value="true" />
+      </feature>
+
+    </config-file>
 
     <config-file target="AndroidManifest.xml" parent="/manifest">
 
