@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:android="http://schemas.android.com/apk/res/android"
-  id="com.eteng.push.xgpush"
+  id="com.eteng.android.push.xgpush"
   version="0.1.0">
 
   <name>xgpush-cordova</name>
@@ -20,7 +20,7 @@
   <preference name="ACCESS_KEY" />
 
   <js-module src="www/xgpush.js" name="xgpush">
-    <clobbers target="xgpush" />
+    <clobbers target="XGPush" />
   </js-module>
 
   <!-- android -->
@@ -28,8 +28,8 @@
 
     <config-file target="res/xml/config.xml" parent="/*">
 
-      <feature name="XgPush">
-        <param name="android-package" value="com.eteng.push.xgpush2.XgPushPlugin" />
+      <feature name="XGPush">
+        <param name="android-package" value="com.eteng.android.push.xgpush2.XGPushPlugin" />
         <param name="onload" value="true" />
       </feature>
 
@@ -66,8 +66,8 @@
 
       <!-- 【必须】 信鸽receiver广播接收 -->
       <receiver android:name="com.tencent.android.tpush.XGPushReceiver"
-        android:process=":xg_service_v2" >
-        <intent-filter android:priority="0x7fffffff" >
+        android:process=":xg_service_v2">
+        <intent-filter android:priority="0x7fffffff">
           <!-- 【必须】 信鸽SDK的内部广播 -->
           <action android:name="com.tencent.android.tpush.action.SDK" />
           <action android:name="com.tencent.android.tpush.action.INTERNAL_PUSH_MESSAGE" />
@@ -87,7 +87,7 @@
       <!-- 【必须】 (2.30及以上版新增)展示通知的activity -->
       <!-- 【注意】 如果被打开的activity是启动模式为SingleTop，SingleTask或SingleInstance，请根据通知的异常自查列表第8点处理-->
       <activity android:name="com.tencent.android.tpush.XGPushActivity"
-        android:exported="true" >
+        android:exported="true">
         <intent-filter>
           <!-- 若使用AndroidStudio，请设置android:name="android.intent.action"-->
           <action android:name="android.intent.action" />
@@ -103,7 +103,7 @@
 
       <!-- 【必须】 通知service，此选项有助于提高抵达率 -->
       <service android:name="com.tencent.android.tpush.rpc.XGRemoteService"
-        android:exported="true" >
+        android:exported="true">
         <intent-filter>
           <action android:name="$PACKAGE_NAME.PUSH_ACTION" />
         </intent-filter>
@@ -120,8 +120,8 @@
 
     </config-file>
 
-    <source-file src="src/android/XgPushPlugin.java" target-dir="src/com/eteng/push/xgpush2" />
-    <source-file src="src/android/XgPushReceiver.java" target-dir="src/com/eteng/push/xgpush2" />
+    <source-file src="src/android/XGPushPlugin.java" target-dir="src/com/eteng/android/push/xgpush2" />
+    <source-file src="src/android/XGPushReceiver.java" target-dir="src/com/eteng/android/push/xgpush2" />
 
     <source-file src="lib/android/android-support-v4.jar" target-dir="libs" />
     <source-file src="lib/android/Xg_sdk_v2.37.jar" target-dir="libs" />

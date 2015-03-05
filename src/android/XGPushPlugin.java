@@ -1,4 +1,4 @@
-package com.eteng.push.xgpush2;
+package com.eteng.android.push.xgpush2;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,11 +19,11 @@ import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.android.tpush.common.Constants;
 
-public class XgPushPlugin extends CordovaPlugin {
-	
-    private static final String ACTION_REGISTER_PUSH = "register_push";
+public class XGPushPlugin extends CordovaPlugin {
+
+  private static final String ACTION_REGISTER_PUSH = "register_push";
 	private static final String ACTION_UNREGISTER_PUSH = "unregister_push";
-	
+
 	Map<String, BroadcastReceiver> receivers = new HashMap<String, BroadcastReceiver>();
 
 	@Override
@@ -31,7 +31,7 @@ public class XgPushPlugin extends CordovaPlugin {
 		super.initialize(cordova, webView);
 		// log
 		XGPushConfig.enableDebug(cordova.getActivity(), true);
-		
+
 		// initialize
 		Context context = cordova.getActivity().getApplicationContext();
 		XGPushManager.registerPush(context);
@@ -47,7 +47,7 @@ public class XgPushPlugin extends CordovaPlugin {
 			unregisterPush();
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -64,16 +64,16 @@ public class XgPushPlugin extends CordovaPlugin {
 		XGPushManager.registerPush(context, account);
 		receivers.put(account, registerReceiver(callback));
 	}
-	
+
 	private BroadcastReceiver registerReceiver(CallbackContext callback) {
-		BroadcastReceiver receiver = new XgPushReceiver(callback);
+		BroadcastReceiver receiver = new XGPushReceiver(callback);
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Constants.ACTION_FEEDBACK);
 		filter.addAction(Constants.ACTION_PUSH_MESSAGE);
 		cordova.getActivity().registerReceiver(receiver, filter);
 		return receiver;
 	}
-	
+
 	private void unregisterReceiver(BroadcastReceiver receiver) {
 		cordova.getActivity().unregisterReceiver(receiver);
 	}

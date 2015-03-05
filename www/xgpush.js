@@ -5,28 +5,38 @@
  */
 var exec = require('cordova/exec');
 
-module.exports = new xgpush();
+module.exports = new XGPush();
 
-function xgpush() {
+var idGenerator = 0;
+
+function XGPush() {
 }
 
-xgpush.prototype.registerPush = function (account, callback) {
+function getId() {
+  return idGenerator++;
+}
+
+XGPush.prototype.registerPush = function (account, callback) {
+
+  var id = getId();
 
   exec(function (result) {
+    console.log(arguments);
     callback(null, result.title, result.content, result.customContent);
 
   }, function () {
     callback('error');
 
-  }, 'XgPush', 'register_push', [account]);
+  }, 'XGPush', 'register_push', [account, id]);
 
 };
 
-xgpush.prototype.unregisterPush = function () {
+XGPush.prototype.unregisterPush = function (id) {
 
   exec(function () {
 
   }, function () {
 
-  }, 'XgPush', 'unregister_push', []);
+  }, 'XGPush', 'unregister_push', [id]);
+
 }

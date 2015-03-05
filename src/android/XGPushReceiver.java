@@ -1,4 +1,4 @@
-package com.eteng.push.xgpush2;
+package com.eteng.android.push.xgpush2;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
@@ -13,11 +13,11 @@ import com.tencent.android.tpush.XGPushRegisterResult;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.tencent.android.tpush.XGPushTextMessage;
 
-public class XgPushReceiver extends XGPushBaseReceiver {
+public class XGPushReceiver extends XGPushBaseReceiver {
 
 	private CallbackContext callback;
 
-	public XgPushReceiver(CallbackContext callback) {
+	public XGPushReceiver(CallbackContext callback) {
 		this.callback = callback;
 	}
 
@@ -43,6 +43,17 @@ public class XgPushReceiver extends XGPushBaseReceiver {
 
 	@Override
 	public void onTextMessage(Context arg0, XGPushTextMessage message) {
+		JSONObject data = messageToJSON(message);
+		PluginResult result = new PluginResult(PluginResult.Status.OK, data);
+		result.setKeepCallback(true);
+		this.callback.sendPluginResult(result);
+	}
+
+	@Override
+	public void onUnregisterResult(Context arg0, int arg1) {
+	}
+
+	private JSONObject messageToJSON(XGPushTextMessage message) {
 		JSONObject data = new JSONObject();
 		try {
 			data.put("content", message.getContent());
@@ -51,13 +62,7 @@ public class XgPushReceiver extends XGPushBaseReceiver {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		PluginResult result = new PluginResult(PluginResult.Status.OK, data);
-		result.setKeepCallback(true);
-		this.callback.sendPluginResult(result);
-	}
-
-	@Override
-	public void onUnregisterResult(Context arg0, int arg1) {
+		return data;
 	}
 
 }
